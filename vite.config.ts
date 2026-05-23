@@ -4,13 +4,14 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
-  // Served from a project subpath on GitHub Pages in production; '/' for local dev.
-  base: command === 'build' ? '/lexical-rich-editor/' : '/',
+export default defineConfig({
+  // Root by default. Set VITE_BASE (e.g. "/lexical/") to match the subpath your
+  // server serves the app from, so asset URLs resolve correctly.
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-}))
+})

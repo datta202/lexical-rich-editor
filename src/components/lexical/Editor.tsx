@@ -9,14 +9,18 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin'
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { $getRoot, $createParagraphNode, $createTextNode } from 'lexical'
 import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode } from '@lexical/list'
 import { LinkNode, AutoLinkNode } from '@lexical/link'
 import { CodeNode, CodeHighlightNode } from '@lexical/code'
+import { TableNode, TableCellNode, TableRowNode } from '@lexical/table'
 import { TRANSFORMERS } from '@lexical/markdown'
 import { editorTheme } from './theme'
+import { ImageNode } from './ImageNode'
+import { ImagesPlugin } from './ImagesPlugin'
 import { ToolbarPlugin } from './ToolbarPlugin'
 import { StateViewerPlugin } from './StateViewerPlugin'
 import { AutoLinkPlugin } from './AutoLinkPlugin'
@@ -63,6 +67,10 @@ const initialConfig: InitialConfigType = {
     CodeNode,
     CodeHighlightNode,
     HorizontalRuleNode,
+    TableNode,
+    TableCellNode,
+    TableRowNode,
+    ImageNode,
   ],
   editorState: prepopulate,
 }
@@ -94,6 +102,8 @@ export function Editor() {
           <FloatingLinkEditorPlugin />
           <CodeHighlightPlugin />
           <HorizontalRulePlugin />
+          <TablePlugin />
+          <ImagesPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           <StateViewerPlugin />
         </LinkEditProvider>

@@ -34,6 +34,8 @@ import {
 } from '@lexical/list'
 import { $createCodeNode } from '@lexical/code'
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
+import { INSERT_TABLE_COMMAND } from '@lexical/table'
+import { INSERT_IMAGE_COMMAND } from './imageCommand'
 import {
   Bold,
   Italic,
@@ -54,6 +56,8 @@ import {
   ListChecks,
   SquareCode,
   Minus,
+  Table as TableIcon,
+  Image as ImageIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLinkEdit } from './linkEdit'
@@ -238,6 +242,18 @@ export function ToolbarPlugin() {
   const insertHorizontalRule = () =>
     editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)
 
+  const insertTable = () =>
+    editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+      columns: '3',
+      rows: '3',
+      includeHeaders: true,
+    })
+
+  const insertImage = () => {
+    const src = window.prompt('Image URL')?.trim()
+    if (src) editor.dispatchCommand(INSERT_IMAGE_COMMAND, { src, altText: '' })
+  }
+
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-code px-2 py-1.5">
       <ToolbarButton label="Undo" disabled={!canUndo} onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>
@@ -311,6 +327,12 @@ export function ToolbarPlugin() {
 
       <ToolbarButton label="Horizontal rule" onClick={insertHorizontalRule}>
         <Minus size={ICON} />
+      </ToolbarButton>
+      <ToolbarButton label="Insert table" onClick={insertTable}>
+        <TableIcon size={ICON} />
+      </ToolbarButton>
+      <ToolbarButton label="Insert image" onClick={insertImage}>
+        <ImageIcon size={ICON} />
       </ToolbarButton>
     </div>
   )

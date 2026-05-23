@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { mergeRegister, $getNearestNodeOfType } from '@lexical/utils'
+import { mergeRegister, $getNearestNodeOfType, $findMatchingParent } from '@lexical/utils'
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import {
   $getSelection,
   $isRangeSelection,
@@ -46,8 +47,10 @@ import {
   AlignLeft,
   AlignCenter,
   AlignRight,
+  Link as LinkIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLinkEdit } from './linkEdit'
 
 function ToolbarButton({
   onClick,
@@ -91,6 +94,7 @@ const ICON = 16
 
 export function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext()
+  const { setIsLinkEditMode } = useLinkEdit()
   const [canUndo, setCanUndo] = useState(false)
   const [canRedo, setCanRedo] = useState(false)
   const [isBold, setIsBold] = useState(false)
@@ -98,6 +102,7 @@ export function ToolbarPlugin() {
   const [isUnderline, setIsUnderline] = useState(false)
   const [isStrikethrough, setIsStrikethrough] = useState(false)
   const [isCode, setIsCode] = useState(false)
+  const [isLink, setIsLink] = useState(false)
   const [blockType, setBlockType] = useState<string>('paragraph')
 
   const $updateToolbar = useCallback(() => {
@@ -124,6 +129,9 @@ export function ToolbarPlugin() {
     } else {
       setBlockType(element.getType())
     }
+
+    const linkParent = $findMatchingParent(anchorNode, $isLinkNode)
+    setIsLink(linkParent !== null || $isLinkNode(anchorNode))
   }, [])
 
   useEffect(() => {
@@ -163,6 +171,12 @@ export function ToolbarPlugin() {
 
   const formatAlign = (align: ElementFormatType) =>
     editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, align)
+
+  const insertLink = () => {
+    // Create a placeholder link if there isn't one, then open the editor.
+    if (!isLink) editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')
+    setIsLinkEditMode(true)
+  }
 
   const toggleHeading = (tag: HeadingTagType) => {
     editor.update(() => {
@@ -223,6 +237,9 @@ export function ToolbarPlugin() {
       </ToolbarButton>
       <ToolbarButton label="Inline code" active={isCode} onClick={() => formatText('code')}>
         <Code size={ICON} />
+      </ToolbarButton>
+      <ToolbarButton label="Insert link" active={isLink} onClick={insertLink}>
+        <LinkIcon size={ICON} />
       </ToolbarButton>
 
       <Divider />

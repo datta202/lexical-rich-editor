@@ -12,6 +12,7 @@ export const editorTheme: EditorThemeClasses = {
     h3: 'mt-2 mb-1 text-lg font-semibold text-heading',
   },
   quote: 'my-2 border-l-2 border-primary/50 pl-4 italic text-prose-muted',
+  link: 'text-primary underline underline-offset-2 hover:text-primary-hover cursor-pointer',
   list: {
     ul: 'my-2 list-disc pl-6',
     ol: 'my-2 list-decimal pl-6',

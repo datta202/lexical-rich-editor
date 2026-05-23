@@ -20,6 +20,8 @@ The foundation is the editor ported from [itsdatta.com](https://itsdatta.com):
 - Rich text: **bold**, *italic*, underline, strikethrough, inline `code`
 - Block types: headings (H1/H2), quotes
 - Lists: bullet and numbered
+- **Links**: a floating link editor (add / edit / open / remove), auto-linking of
+  typed URLs and emails, and clickable links
 - Text alignment: left / center / right
 - Undo / redo history
 - A live **EditorState (JSON)** viewer that updates on every change

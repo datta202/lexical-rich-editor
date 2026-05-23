@@ -1,6 +1,30 @@
+import { useEffect } from 'react'
 import { Editor } from '@/components/lexical/Editor'
 
+// Embedded (in an iframe on itsdatta.com) when ?embed is present — then we drop
+// the page header so it doesn't duplicate the host page's title.
+const isEmbedded = new URLSearchParams(window.location.search).has('embed')
+
 function App() {
+  // Live theme sync from the host: it postMessages on light/dark toggle.
+  useEffect(() => {
+    function onMessage(e: MessageEvent) {
+      if (e.data?.type === 'set-theme') {
+        document.documentElement.classList.toggle('dark', e.data.theme === 'dark')
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+
+  if (isEmbedded) {
+    return (
+      <main className="mx-auto max-w-3xl p-4">
+        <Editor />
+      </main>
+    )
+  }
+
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-4 py-12">
       <header>

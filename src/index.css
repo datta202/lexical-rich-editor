@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Theme tokens carried over from itsdatta.com so the ported editor renders
+ * identically. :root is the light palette; .dark holds the dark palette,
+ * toggled by adding the `dark` class to <html>.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+
+  --primary: #0969da;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1a1a1a;
+
+  --muted: #f3f4f6;
+  --muted-foreground: #5b6470;
+  --accent: #f3f4f6;
+  --accent-foreground: #1a1a1a;
+
+  --destructive: #ef4444;
+
+  --border: #e5e7eb;
+  --input: #d4d4d8;
+  --ring: #0969da;
+
+  --heading: #111827;
+  --primary-hover: #0550ae;
+  --code-bg: #f6f8fa;
+  --code-foreground: #1f2937;
+  --code-inline-bg: #f3f4f6;
+  --code-inline-foreground: #1f2937;
+  --state-viewer-foreground: #0550ae;
+  --prose-foreground: #374151;
+  --prose-muted: #6b7280;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #e0e0e0;
+
+  --card: #111111;
+  --card-foreground: #e0e0e0;
+  --popover: #111111;
+  --popover-foreground: #e0e0e0;
+
+  --primary: #58a6ff;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #e0e0e0;
+
+  --muted: #1a1a1a;
+  --muted-foreground: #888888;
+  --accent: #1a1a1a;
+  --accent-foreground: #ffffff;
+
+  --destructive: #ef4444;
+
+  --border: #1a1a1a;
+  --input: #2a2a2a;
+  --ring: #58a6ff;
+
+  --heading: #ffffff;
+  --primary-hover: #79c0ff;
+  --code-bg: #0d0d0d;
+  --code-foreground: #e0e0e0;
+  --code-inline-bg: #1a1a1a;
+  --code-inline-foreground: #e0e0e0;
+  --state-viewer-foreground: #9ad1ff;
+  --prose-foreground: #c9c9c9;
+  --prose-muted: #aaaaaa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-heading: var(--heading);
+  --color-primary-hover: var(--primary-hover);
+  --color-code: var(--code-bg);
+  --color-code-foreground: var(--code-foreground);
+  --color-code-inline-bg: var(--code-inline-bg);
+  --color-code-inline-foreground: var(--code-inline-foreground);
+  --color-state-viewer-foreground: var(--state-viewer-foreground);
+  --color-prose-foreground: var(--prose-foreground);
+  --color-prose-muted: var(--prose-muted);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Lexical editor */
+.editor-input {
+  position: relative;
+  min-height: 220px;
+  padding: 1rem;
+  outline: none;
+  caret-color: var(--primary);
+  color: var(--foreground);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  tab-size: 1;
+}
+.editor-placeholder {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  user-select: none;
+}

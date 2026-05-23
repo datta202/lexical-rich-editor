@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collaborative Lexical Editor</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      .panes {
+        display: flex;
+        height: 100vh;
+      }
+      .panes iframe {
+        flex: 1;
+        border: 0;
+        height: 100%;
+        min-width: 0;
+      }
+      .panes iframe + iframe {
+        border-left: 1px solid #d0d0d0;
+      }
+      html.dark .panes iframe + iframe {
+        border-left-color: #2a2a2a;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Two editors of the same document, side by side. They sync live via the
+         WebRTC provider's BroadcastChannel (same origin, no server). -->
+    <div class="panes">
+      <iframe id="paneA" title="Editor A"></iframe>
+      <iframe id="paneB" title="Editor B"></iframe>
+    </div>
+    <script>
+      ;(function () {
+        var theme = new URLSearchParams(location.search).get('theme') || 'light'
+        if (theme === 'dark') document.documentElement.classList.add('dark')
+        var src = 'collab-app.html?embed=1&theme=' + theme
+        var panes = [document.getElementById('paneA'), document.getElementById('paneB')]
+        panes.forEach(function (f) {
+          f.src = src
+        })
+        // Relay theme changes from the host (itsdatta) down to both panes.
+        window.addEventListener('message', function (e) {
+          if (e.data && e.data.type === 'set-theme') {
+            document.documentElement.classList.toggle('dark', e.data.theme === 'dark')
+            panes.forEach(function (f) {
+              if (f.contentWindow) f.contentWindow.postMessage(e.data, '*')
+            })
+          }
+        })
+      })()
+    </script>
+  </body>
+</html>

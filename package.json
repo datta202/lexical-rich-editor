@@ -22,13 +22,17 @@
     "@lexical/selection": "0.44.0",
     "@lexical/table": "^0.44.0",
     "@lexical/utils": "0.44.0",
+    "@lexical/yjs": "0.44.0",
     "clsx": "^2.1.1",
     "katex": "^0.16.47",
     "lexical": "0.44.0",
     "lucide-react": "^0.475.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "y-webrtc": "^10.3.0",
+    "y-websocket": "^2.0.2",
+    "yjs": "^13.6.30"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

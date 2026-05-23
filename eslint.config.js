@@ -6,7 +6,8 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // src/collab is vendored from the official Lexical example — linted/typed upstream.
+  globalIgnores(['dist', 'src/collab']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

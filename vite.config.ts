@@ -14,4 +14,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        // The standard editor, plus the collaborative demo (a two-pane page and
+        // the single-editor instance it embeds in each pane).
+        main: path.resolve(__dirname, 'index.html'),
+        collab: path.resolve(__dirname, 'collab.html'),
+        collabApp: path.resolve(__dirname, 'collab-app.html'),
+      },
+    },
+  },
 })

@@ -21,6 +21,9 @@ import { TRANSFORMERS } from '@lexical/markdown'
 import { editorTheme } from './theme'
 import { ImageNode } from './ImageNode'
 import { ImagesPlugin } from './ImagesPlugin'
+import { EquationNode } from './EquationNode'
+import { EquationsPlugin } from './EquationsPlugin'
+import { ComponentPickerPlugin } from './ComponentPickerPlugin'
 import { ToolbarPlugin } from './ToolbarPlugin'
 import { StateViewerPlugin } from './StateViewerPlugin'
 import { AutoLinkPlugin } from './AutoLinkPlugin'
@@ -71,6 +74,7 @@ const initialConfig: InitialConfigType = {
     TableCellNode,
     TableRowNode,
     ImageNode,
+    EquationNode,
   ],
   editorState: prepopulate,
 }
@@ -104,6 +108,8 @@ export function Editor() {
           <HorizontalRulePlugin />
           <TablePlugin />
           <ImagesPlugin />
+          <EquationsPlugin />
+          <ComponentPickerPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           <StateViewerPlugin />
         </LinkEditProvider>

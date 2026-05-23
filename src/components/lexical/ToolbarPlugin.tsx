@@ -36,6 +36,7 @@ import { $createCodeNode } from '@lexical/code'
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
 import { INSERT_TABLE_COMMAND } from '@lexical/table'
 import { INSERT_IMAGE_COMMAND } from './imageCommand'
+import { INSERT_EQUATION_COMMAND } from './equationCommand'
 import {
   Bold,
   Italic,
@@ -58,6 +59,7 @@ import {
   Minus,
   Table as TableIcon,
   Image as ImageIcon,
+  Sigma,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLinkEdit } from './linkEdit'
@@ -254,6 +256,11 @@ export function ToolbarPlugin() {
     if (src) editor.dispatchCommand(INSERT_IMAGE_COMMAND, { src, altText: '' })
   }
 
+  const insertEquation = () => {
+    const equation = window.prompt('LaTeX, e.g. \\frac{a}{b}')?.trim()
+    if (equation) editor.dispatchCommand(INSERT_EQUATION_COMMAND, { equation, inline: true })
+  }
+
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-code px-2 py-1.5">
       <ToolbarButton label="Undo" disabled={!canUndo} onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>
@@ -333,6 +340,9 @@ export function ToolbarPlugin() {
       </ToolbarButton>
       <ToolbarButton label="Insert image" onClick={insertImage}>
         <ImageIcon size={ICON} />
+      </ToolbarButton>
+      <ToolbarButton label="Insert equation" onClick={insertEquation}>
+        <Sigma size={ICON} />
       </ToolbarButton>
     </div>
   )

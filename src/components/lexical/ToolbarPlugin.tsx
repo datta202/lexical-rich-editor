@@ -104,7 +104,7 @@ function Divider() {
 
 const ICON = 16
 
-export function ToolbarPlugin() {
+export function ToolbarPlugin({ minimal = false }: { minimal?: boolean }) {
   const [editor] = useLexicalComposerContext()
   const { setIsLinkEditMode } = useLinkEdit()
   const [canUndo, setCanUndo] = useState(false)
@@ -287,9 +287,11 @@ export function ToolbarPlugin() {
       <ToolbarButton label="Inline code" active={isCode} onClick={() => formatText('code')}>
         <Code size={ICON} />
       </ToolbarButton>
-      <ToolbarButton label="Insert link" active={isLink} onClick={insertLink}>
-        <LinkIcon size={ICON} />
-      </ToolbarButton>
+      {!minimal && (
+        <ToolbarButton label="Insert link" active={isLink} onClick={insertLink}>
+          <LinkIcon size={ICON} />
+        </ToolbarButton>
+      )}
 
       <Divider />
 
@@ -302,9 +304,11 @@ export function ToolbarPlugin() {
       <ToolbarButton label="Quote" active={blockType === 'quote'} onClick={toggleQuote}>
         <Quote size={ICON} />
       </ToolbarButton>
-      <ToolbarButton label="Code block" active={blockType === 'code'} onClick={toggleCodeBlock}>
-        <SquareCode size={ICON} />
-      </ToolbarButton>
+      {!minimal && (
+        <ToolbarButton label="Code block" active={blockType === 'code'} onClick={toggleCodeBlock}>
+          <SquareCode size={ICON} />
+        </ToolbarButton>
+      )}
 
       <Divider />
 
@@ -314,9 +318,11 @@ export function ToolbarPlugin() {
       <ToolbarButton label="Numbered list" active={blockType === 'number'} onClick={toggleNumberedList}>
         <ListOrdered size={ICON} />
       </ToolbarButton>
-      <ToolbarButton label="Check list" active={blockType === 'check'} onClick={toggleCheckList}>
-        <ListChecks size={ICON} />
-      </ToolbarButton>
+      {!minimal && (
+        <ToolbarButton label="Check list" active={blockType === 'check'} onClick={toggleCheckList}>
+          <ListChecks size={ICON} />
+        </ToolbarButton>
+      )}
 
       <Divider />
 
@@ -330,20 +336,24 @@ export function ToolbarPlugin() {
         <AlignRight size={ICON} />
       </ToolbarButton>
 
-      <Divider />
+      {!minimal && (
+        <>
+          <Divider />
 
-      <ToolbarButton label="Horizontal rule" onClick={insertHorizontalRule}>
-        <Minus size={ICON} />
-      </ToolbarButton>
-      <ToolbarButton label="Insert table" onClick={insertTable}>
-        <TableIcon size={ICON} />
-      </ToolbarButton>
-      <ToolbarButton label="Insert image" onClick={insertImage}>
-        <ImageIcon size={ICON} />
-      </ToolbarButton>
-      <ToolbarButton label="Insert equation" onClick={insertEquation}>
-        <Sigma size={ICON} />
-      </ToolbarButton>
+          <ToolbarButton label="Horizontal rule" onClick={insertHorizontalRule}>
+            <Minus size={ICON} />
+          </ToolbarButton>
+          <ToolbarButton label="Insert table" onClick={insertTable}>
+            <TableIcon size={ICON} />
+          </ToolbarButton>
+          <ToolbarButton label="Insert image" onClick={insertImage}>
+            <ImageIcon size={ICON} />
+          </ToolbarButton>
+          <ToolbarButton label="Insert equation" onClick={insertEquation}>
+            <Sigma size={ICON} />
+          </ToolbarButton>
+        </>
+      )}
     </div>
   )
 }

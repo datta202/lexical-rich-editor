@@ -79,12 +79,12 @@ const initialConfig: InitialConfigType = {
   editorState: prepopulate,
 }
 
-export function Editor() {
+export function Editor({ minimal = false }: { minimal?: boolean }) {
   return (
     <div className="overflow-hidden rounded-[10px] border border-border bg-card">
       <LexicalComposer initialConfig={initialConfig}>
         <LinkEditProvider>
-          <ToolbarPlugin />
+          <ToolbarPlugin minimal={minimal} />
           <div className="relative">
             <RichTextPlugin
               contentEditable={
@@ -99,18 +99,24 @@ export function Editor() {
           </div>
           <HistoryPlugin />
           <ListPlugin />
-          <CheckListPlugin />
-          <LinkPlugin validateUrl={(url) => sanitizeUrl(url) !== 'about:blank'} />
-          <ClickableLinkPlugin />
-          <AutoLinkPlugin />
-          <FloatingLinkEditorPlugin />
-          <CodeHighlightPlugin />
-          <HorizontalRulePlugin />
-          <TablePlugin />
-          <ImagesPlugin />
-          <EquationsPlugin />
-          <ComponentPickerPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          {/* Advanced features only in the full editor; the minimal embed (blog
+              post) keeps just rich text + lists + the live state viewer. */}
+          {!minimal && (
+            <>
+              <CheckListPlugin />
+              <LinkPlugin validateUrl={(url) => sanitizeUrl(url) !== 'about:blank'} />
+              <ClickableLinkPlugin />
+              <AutoLinkPlugin />
+              <FloatingLinkEditorPlugin />
+              <CodeHighlightPlugin />
+              <HorizontalRulePlugin />
+              <TablePlugin />
+              <ImagesPlugin />
+              <EquationsPlugin />
+              <ComponentPickerPlugin />
+            </>
+          )}
           <StateViewerPlugin />
         </LinkEditProvider>
       </LexicalComposer>

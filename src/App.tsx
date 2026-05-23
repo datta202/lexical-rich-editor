@@ -18,11 +18,8 @@ function App() {
   }, [])
 
   if (isEmbedded) {
-    return (
-      <main className="mx-auto max-w-3xl p-4">
-        <Editor />
-      </main>
-    )
+    // Fill the iframe with no surrounding chrome/padding.
+    return <Editor />
   }
 
   return (

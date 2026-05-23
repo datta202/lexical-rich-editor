@@ -104,7 +104,14 @@ function Divider() {
 
 const ICON = 16
 
-export function ToolbarPlugin({ minimal = false }: { minimal?: boolean }) {
+export function ToolbarPlugin({
+  minimal = false,
+  collab = false,
+}: {
+  minimal?: boolean
+  // Under collaboration there's no HistoryPlugin, so hide undo/redo.
+  collab?: boolean
+}) {
   const [editor] = useLexicalComposerContext()
   const { setIsLinkEditMode } = useLinkEdit()
   const [canUndo, setCanUndo] = useState(false)
@@ -263,14 +270,18 @@ export function ToolbarPlugin({ minimal = false }: { minimal?: boolean }) {
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-code px-2 py-1.5">
-      <ToolbarButton label="Undo" disabled={!canUndo} onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>
-        <Undo2 size={ICON} />
-      </ToolbarButton>
-      <ToolbarButton label="Redo" disabled={!canRedo} onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}>
-        <Redo2 size={ICON} />
-      </ToolbarButton>
+      {!collab && (
+        <>
+          <ToolbarButton label="Undo" disabled={!canUndo} onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>
+            <Undo2 size={ICON} />
+          </ToolbarButton>
+          <ToolbarButton label="Redo" disabled={!canRedo} onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}>
+            <Redo2 size={ICON} />
+          </ToolbarButton>
 
-      <Divider />
+          <Divider />
+        </>
+      )}
 
       <ToolbarButton label="Bold" active={isBold} onClick={() => formatText('bold')}>
         <Bold size={ICON} />

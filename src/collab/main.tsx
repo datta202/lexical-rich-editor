@@ -1,26 +1,24 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-import './styles.css';
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+// Use the main app's styles (Tailwind + theme tokens + .editor-input) so the
+// collaborative editor matches the Rich-Text Editor exactly.
+import '../index.css'
+import { CollabEditor } from './CollabEditor'
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-
-import App from './App.tsx';
-
-// Apply the theme before first paint (the host passes ?theme=dark when embedded).
+// Theme: apply ?theme=dark before paint, and track the host's live toggle.
 if (new URLSearchParams(window.location.search).get('theme') === 'dark') {
-  document.documentElement.classList.add('dark');
+  document.documentElement.classList.add('dark')
 }
+window.addEventListener('message', (e) => {
+  if (e.data?.type === 'set-theme') {
+    document.documentElement.classList.toggle('dark', e.data.theme === 'dark')
+  }
+})
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <div className="App">
-      <App />
-    </div>
-  </React.StrictMode>,
-);
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <main className="mx-auto max-w-3xl p-4">
+      <CollabEditor />
+    </main>
+  </StrictMode>
+)

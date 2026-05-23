@@ -39,11 +39,10 @@
       ;(function () {
         var theme = new URLSearchParams(location.search).get('theme') || 'light'
         if (theme === 'dark') document.documentElement.classList.add('dark')
-        var src = 'collab-app.html?embed=1&theme=' + theme
+        var base = 'collab-app.html?embed=1&theme=' + theme
+        document.getElementById('paneA').src = base + '&name=Datta'
+        document.getElementById('paneB').src = base + '&name=Kiran'
         var panes = [document.getElementById('paneA'), document.getElementById('paneB')]
-        panes.forEach(function (f) {
-          f.src = src
-        })
         // Relay theme changes from the host (itsdatta) down to both panes.
         window.addEventListener('message', function (e) {
           if (e.data && e.data.type === 'set-theme') {

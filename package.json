@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:embed": "tsc -b && VITE_BASE=/lexical/ vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

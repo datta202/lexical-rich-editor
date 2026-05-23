@@ -5,6 +5,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin'
+import { LexicalCollaboration } from '@lexical/react/LexicalCollaborationContext'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode } from '@lexical/list'
 import type { Provider } from '@lexical/yjs'
@@ -66,8 +67,9 @@ export function CollabEditor() {
       ref={containerRef}
       className="relative overflow-hidden rounded-[10px] border border-border bg-card"
     >
-      <LexicalComposer initialConfig={initialConfig}>
-        <LinkEditProvider>
+      <LexicalCollaboration>
+        <LexicalComposer initialConfig={initialConfig}>
+          <LinkEditProvider>
           <ToolbarPlugin minimal collab />
           <div className="relative">
             <RichTextPlugin
@@ -92,7 +94,8 @@ export function CollabEditor() {
           </div>
           <PresenceBar self={NAME} selfColor={COLOR} users={users} />
         </LinkEditProvider>
-      </LexicalComposer>
+        </LexicalComposer>
+      </LexicalCollaboration>
     </div>
   )
 }

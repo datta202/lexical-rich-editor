@@ -27,10 +27,13 @@ import { $setBlocksType } from '@lexical/selection'
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
+  INSERT_CHECK_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
   $isListNode,
   ListNode,
 } from '@lexical/list'
+import { $createCodeNode } from '@lexical/code'
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
 import {
   Bold,
   Italic,
@@ -48,6 +51,9 @@ import {
   AlignCenter,
   AlignRight,
   Link as LinkIcon,
+  ListChecks,
+  SquareCode,
+  Minus,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLinkEdit } from './linkEdit'
@@ -212,6 +218,26 @@ export function ToolbarPlugin() {
       undefined
     )
 
+  const toggleCheckList = () =>
+    editor.dispatchCommand(
+      blockType === 'check' ? REMOVE_LIST_COMMAND : INSERT_CHECK_LIST_COMMAND,
+      undefined
+    )
+
+  const toggleCodeBlock = () => {
+    editor.update(() => {
+      const selection = $getSelection()
+      if ($isRangeSelection(selection)) {
+        $setBlocksType(selection, () =>
+          blockType === 'code' ? $createParagraphNode() : $createCodeNode()
+        )
+      }
+    })
+  }
+
+  const insertHorizontalRule = () =>
+    editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)
+
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-b border-border bg-code px-2 py-1.5">
       <ToolbarButton label="Undo" disabled={!canUndo} onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>
@@ -253,6 +279,9 @@ export function ToolbarPlugin() {
       <ToolbarButton label="Quote" active={blockType === 'quote'} onClick={toggleQuote}>
         <Quote size={ICON} />
       </ToolbarButton>
+      <ToolbarButton label="Code block" active={blockType === 'code'} onClick={toggleCodeBlock}>
+        <SquareCode size={ICON} />
+      </ToolbarButton>
 
       <Divider />
 
@@ -261,6 +290,9 @@ export function ToolbarPlugin() {
       </ToolbarButton>
       <ToolbarButton label="Numbered list" active={blockType === 'number'} onClick={toggleNumberedList}>
         <ListOrdered size={ICON} />
+      </ToolbarButton>
+      <ToolbarButton label="Check list" active={blockType === 'check'} onClick={toggleCheckList}>
+        <ListChecks size={ICON} />
       </ToolbarButton>
 
       <Divider />
@@ -273,6 +305,12 @@ export function ToolbarPlugin() {
       </ToolbarButton>
       <ToolbarButton label="Align right" onClick={() => formatAlign('right')}>
         <AlignRight size={ICON} />
+      </ToolbarButton>
+
+      <Divider />
+
+      <ToolbarButton label="Horizontal rule" onClick={insertHorizontalRule}>
+        <Minus size={ICON} />
       </ToolbarButton>
     </div>
   )

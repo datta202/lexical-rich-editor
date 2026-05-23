@@ -5,17 +5,24 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin'
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { $getRoot, $createParagraphNode, $createTextNode } from 'lexical'
 import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode } from '@lexical/list'
 import { LinkNode, AutoLinkNode } from '@lexical/link'
+import { CodeNode, CodeHighlightNode } from '@lexical/code'
+import { TRANSFORMERS } from '@lexical/markdown'
 import { editorTheme } from './theme'
 import { ToolbarPlugin } from './ToolbarPlugin'
 import { StateViewerPlugin } from './StateViewerPlugin'
 import { AutoLinkPlugin } from './AutoLinkPlugin'
 import { FloatingLinkEditorPlugin } from './FloatingLinkEditorPlugin'
 import { LinkEditProvider } from './LinkEditProvider'
+import { CodeHighlightPlugin } from './CodeHighlightPlugin'
 import { sanitizeUrl } from './sanitizeUrl'
 
 const PLACEHOLDER = 'Start typing — try the toolbar above…'
@@ -46,7 +53,17 @@ const initialConfig: InitialConfigType = {
   onError(error) {
     throw error
   },
-  nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, LinkNode, AutoLinkNode],
+  nodes: [
+    HeadingNode,
+    QuoteNode,
+    ListNode,
+    ListItemNode,
+    LinkNode,
+    AutoLinkNode,
+    CodeNode,
+    CodeHighlightNode,
+    HorizontalRuleNode,
+  ],
   editorState: prepopulate,
 }
 
@@ -70,10 +87,14 @@ export function Editor() {
           </div>
           <HistoryPlugin />
           <ListPlugin />
+          <CheckListPlugin />
           <LinkPlugin validateUrl={(url) => sanitizeUrl(url) !== 'about:blank'} />
           <ClickableLinkPlugin />
           <AutoLinkPlugin />
           <FloatingLinkEditorPlugin />
+          <CodeHighlightPlugin />
+          <HorizontalRulePlugin />
+          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           <StateViewerPlugin />
         </LinkEditProvider>
       </LexicalComposer>

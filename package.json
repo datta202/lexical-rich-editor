@@ -11,13 +11,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lexical/code": "^0.44.0",
+    "@lexical/code-prism": "^0.44.0",
     "@lexical/link": "0.44.0",
     "@lexical/list": "0.44.0",
+    "@lexical/markdown": "^0.44.0",
     "@lexical/react": "0.44.0",
     "@lexical/rich-text": "0.44.0",
     "@lexical/selection": "0.44.0",
+    "@lexical/table": "^0.44.0",
     "@lexical/utils": "0.44.0",
     "clsx": "^2.1.1",
+    "katex": "^0.16.47",
     "lexical": "0.44.0",
     "lucide-react": "^0.475.0",
     "react": "^19.2.6",
@@ -27,7 +32,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.0.0",
-    "tailwindcss": "^4.0.0",
+    "@types/katex": "^0.16.8",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -36,6 +41,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "tailwindcss": "^4.0.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"

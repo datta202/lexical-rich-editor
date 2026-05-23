@@ -1,8 +1,8 @@
 import type { EditorThemeClasses } from 'lexical'
 
 /**
- * Maps Lexical node types to Tailwind classes. Lexical applies these classNames
- * directly to the contenteditable DOM nodes.
+ * Maps Lexical node types to Tailwind classes / CSS class names. Lexical applies
+ * these classNames directly to the contenteditable DOM nodes.
  */
 export const editorTheme: EditorThemeClasses = {
   paragraph: 'mb-2 last:mb-0',
@@ -13,10 +13,15 @@ export const editorTheme: EditorThemeClasses = {
   },
   quote: 'my-2 border-l-2 border-primary/50 pl-4 italic text-prose-muted',
   link: 'text-primary underline underline-offset-2 hover:text-primary-hover cursor-pointer',
+  hr: 'editor-hr',
   list: {
     ul: 'my-2 list-disc pl-6',
     ol: 'my-2 list-decimal pl-6',
+    checklist: 'my-2 list-none p-0',
     listitem: 'mb-1',
+    listitemChecked: 'editor-listitem-checked',
+    listitemUnchecked: 'editor-listitem-unchecked',
+    nested: { listitem: 'list-none' },
   },
   text: {
     bold: 'font-bold',
@@ -26,5 +31,40 @@ export const editorTheme: EditorThemeClasses = {
     underlineStrikethrough: '[text-decoration:underline_line-through]',
     code: 'rounded-[4px] bg-code-inline-bg px-1.5 py-0.5 font-mono text-[0.9em] text-code-inline-foreground',
   },
-  code: 'my-2 block overflow-x-auto rounded-[8px] bg-code p-3 font-mono text-sm text-code-foreground',
+  code: 'editor-code',
+  codeHighlight: {
+    atrule: 'tok-attr',
+    attr: 'tok-attr',
+    boolean: 'tok-number',
+    builtin: 'tok-builtin',
+    cdata: 'tok-comment',
+    char: 'tok-string',
+    'class-name': 'tok-class',
+    comment: 'tok-comment',
+    constant: 'tok-number',
+    deleted: 'tok-deleted',
+    doctype: 'tok-comment',
+    entity: 'tok-operator',
+    function: 'tok-function',
+    important: 'tok-keyword',
+    inserted: 'tok-string',
+    keyword: 'tok-keyword',
+    namespace: 'tok-attr',
+    number: 'tok-number',
+    operator: 'tok-operator',
+    prolog: 'tok-comment',
+    property: 'tok-property',
+    punctuation: 'tok-punct',
+    regex: 'tok-regex',
+    selector: 'tok-string',
+    string: 'tok-string',
+    symbol: 'tok-number',
+    tag: 'tok-property',
+    url: 'tok-operator',
+    variable: 'tok-variable',
+  },
+  table: 'editor-table',
+  tableCell: 'editor-table-cell',
+  tableCellHeader: 'editor-table-cell-header',
+  image: 'editor-image',
 }
